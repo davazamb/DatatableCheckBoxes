@@ -31,6 +31,55 @@ namespace DatatablesCheckBox.WEB.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult ListadoDisparo(List<cBoleta_Vtr_Detalle_Disparo> listados)
+        {
+
+
+            foreach (var item in listados)
+            {
+                var estado = item.Codigo_Estado;
+                if (estado == 5)
+                {
+                    var resultado = actualizaEstadoOT(listados);
+                    return Json(new { data = resultado }, JsonRequestBehavior.AllowGet);
+                }
+
+                //return Json(new { data = resultado }, JsonRequestBehavior.AllowGet);
+                var errado = estado.ToString().Count();                                                          
+
+            }
+            //var resultado = Codigo_OT;
+            return View();
+        }
+
+        public int actualizaEstadoOT(List<cBoleta_Vtr_Detalle_Disparo> listado)
+        {
+            int respuesta = -1;
+            try
+            {
+                foreach (var item in listado)
+                {
+                    var existe = (from o in context.Boleta_VTR_OT
+                                  where o.Codigo_Reg_Proceso == item.Codigo_Proceso && o.Codigo_OT == item.Codigo_OT
+                                  select o).Count();
+                    if (existe > 0)
+                    {
+                        Boleta_VTR_OT ot = new Boleta_VTR_OT
+                        {
+                            Codigo_Estado_ProcOT = item.Codigo_Estado
+                        };
+                        context.Boleta_VTR_OT.Add(ot);
+                    }
+                }
+                respuesta = context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return respuesta;
+        }
         public ActionResult BuscarProcesoDisparo(int idProceso)
         {
             if (idProceso != 0)

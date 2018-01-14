@@ -4,6 +4,16 @@
 @using DatatablesCheckBox.WEB.Models
 @model cModelos
 
+
+@*<link href="~/Content/css/bootstrap-datepicker/bootstrap-datepicker3.css" rel="stylesheet">
+<link href="~/Content/css/bootstrap-clockpicker.min.css" rel="stylesheet" />*@
+<link href="~/Content/DataTables/DataTables-1.10.16/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/Select-1.2.4/css/select.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/Buttons-1.5.1/css/buttons.dataTables.min.css" rel="stylesheet" />
+<link href="~/Content/DataTables/dataTables.checkboxes.css" rel="stylesheet" />
+
+@*<link href="~/Scripts/DataTables/css/dataTables.checkboxes.css" rel="stylesheet" />*@
+
 <div class="jumbotron">
     <h3>Buscar</h3>
     @Html.DropDownListFor(x => Model.procesos.codigo_proceso, (IEnumerable<SelectListItem>)ViewBag.ListadoProcesoDisponibleVtr, new { id = "dropNmroProceso", @class = "form-control input-sm" })
@@ -41,6 +51,7 @@
             </div>
             <!--Termino Table-->
         </div>
+        <button type="submit" class="btn btn-verde animate btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Disparar</button>
 
     </div>
 </div>
@@ -75,39 +86,44 @@
 </style>
 
 @section scripts{
-    <script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/DataTables/DataTables-1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="~/Content/DataTables/Select-1.2.4/js/dataTables.select.min.js"></script>
+    <script src="~/Content/DataTables/Buttons-1.5.1/js/dataTables.buttons.min.js"></script>
+    <script src="~/Scripts/general.js"></script>
+    <script src="~/Content/DataTables/dataTables.checkboxes.min.js"></script>
+    @*<script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
     <script src="~/Scripts/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
     <script src="~/Scripts/moment-with-locales.js"></script>
-    <script src="~/Scripts/bootstrap-clockpicker.min.js"></script>
-    <script src="~/Scripts/App/programarDisparo.js"></script>
+    <script src="~/Scripts/bootstrap-clockpicker.min.js"></script>*@
+    @*<script src="~/Scripts/App/programarDisparo.js"></script>*@
 
 
-    <script src="~/Scripts/DataTables/dataTables.checkboxes.min.js"></script>
+    @*<script src="~/Scripts/DataTables/dataTables.checkboxes.min.js"></script>*@
     @*<script src="~/Scripts/DataTables/datatables.min.js"></script>*@
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('.clockpicker').clockpicker();
-        });
+        //$(document).ready(function () {
+        //    $('.clockpicker').clockpicker();
+        //});
 
          var TabladeProgramar;
-            $('document').ready(function () {
-                $(".fecha").datepicker({
-                    startDate: "now",
-                    format: "dd/mm/yyyy",
-                    language: "es",
-                    autoclose: true,
-                    todayHighlight: true,
-                    orientation: "left bottom",
-                }).on("changeDate", function (ev) {
-                    $(this).valid();
-                    //
-                });
+            //$('document').ready(function () {
+            //    $(".fecha").datepicker({
+            //        startDate: "now",
+            //        format: "dd/mm/yyyy",
+            //        language: "es",
+            //        autoclose: true,
+            //        todayHighlight: true,
+            //        orientation: "left bottom",
+            //    }).on("changeDate", function (ev) {
+            //        $(this).valid();
+            //        //
+            //    });
 
-                $("#fechaProgramar").datepicker(
-                    "setDate", "now");
+            //    $("#fechaProgramar").datepicker(
+            //        "setDate", "now");
 
-            });
+            //});
 
             $('document').ready(function () {
                 $("#frmLotes").submit(function () {
@@ -119,13 +135,29 @@
 
             $('document').ready(function () {
                 MuestraEspera($("#TablaProgramar"), "Cargando datos, por favor espere...");
-                url = '@Url.Action("BuscarProcesoDisparo", "Distribucion")';
+                url = '@Url.Action("BuscarProcesoDisparo", "Home")';
                 TabladeProgramar = $("#TablaProgramar").DataTable({
-                //    dom: 'Bfrtip',
-                //buttons: [
-                //    'selectAll',
-                //    'selectNone'
-                //],
+                    dom: 'Bfrtip',
+                    buttons: [       
+                        'selectAll',
+                        'selectNone',  
+                    ],
+
+                    //dom: 'Bfrtip', 
+                    //buttons: [
+                    //    {
+                    //        text: 'Select all',
+                    //        action: function () {   
+                    //            table.rows().select();
+                    //        }
+                    //    },
+                    //    {
+                    //        text: 'Select none',
+                    //        action: function () {    
+                    //            table.rows().deselect();
+                    //        }
+                    //    }
+                    //],
                 bFilter: false,
                 lengthChange: false,
                 serverSide: false,
@@ -138,34 +170,34 @@
                 //    selector: 'td:not(.col-accion)'
                 //},
                 "language": {
-                    "url": "@Url.Content("~/Scripts/DataTables/spanish.json")"
-                },
-
+                    "url": "@Url.Content("~/Content/DataTables/spanish.json")"
+                },                                                                    
                 columns: [
 
                     {
                         data: "Codigo_OT",
-                        'targets': 0,
-                        //render: function (data, type, row) {
-                        //    if (row.Codigo_Estado <= 4) {
-                        //       return '<input type="checkbox" id="checkInactivo" class="inactivo" disabled>';
-                        //    } else if (row.Codigo_Estado <= 6) {
-                        //        return '<input type="checkbox" id="checkActivo" class="activo">';
-                        //    }
-                        //    return '<input type="checkbox" id="checkInactivo" class="inactivo" disabled>';
-                        //},
-                        //className: 'select-checkbox',
-                        className: 'select-checkbox',
+                        //'targets': 0,
+                        render: function (data, type, row) {
+                            if (row.Codigo_Estado <= 4) {
+                               return '<input type="checkbox" id="checkInactivo" class="inactivo" disabled>';
+                            } else if (row.Codigo_Estado <= 6) {
+                                table.rows().deselect();
+                                return '<input type="checkbox" id="checkActivo" class="activo">';
+                            }
+                            return '<input type="checkbox" id="checkInactivo" class="inactivo" disabled>';
+                        },
+                        //className: 'select-checkbox',  
                         //checkboxes: {
                         //    selectRow: true
                         //    //selectAll: true,
                         //    //selectAllPages: true
                         //},
-                        createdCell: function (td, cellData, rowData, row, col) {
-                            if (rowData[3] === 156156) {
-                                this.api().cell(td).checkboxes.disable();
-                            }
-                        },
+                        //createdCell: function (td, cellData, rowData, row, col) {
+                        //    if (rowData[3] === 156156) {
+                        //        this.api().cell(td).checkboxes.disable();
+                        //    }
+                        //},
+     
                     },
 
                 { data: "Codigo_Proceso", "autoWidth": true },
@@ -286,7 +318,7 @@
                 };
                 $.ajax({
                     type: 'POST',
-                    url: '@Url.Action("ListadoDisparo", "Distribucion")',
+                    url: '@Url.Action("ListadoDisparo", "Home")',
                     dataType: 'json',
                     data: data
                 }).done(function (response) {
