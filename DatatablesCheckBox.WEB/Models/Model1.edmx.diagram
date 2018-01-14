@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="beaf34fb15b04eaabfddae1a16dc20af" Name="Diagram1">
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Agenda_Job" Width="1.5" PointX="5.25" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Alta_OT" Width="1.5" PointX="10.5" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Auditoria_tipos" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Ciclo" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Disparo" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_HTML" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_HTML_Parametros" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Llave" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_OT" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_OT_estado" Width="1.5" PointX="6" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_OT_MuestrasR3" Width="1.5" PointX="10.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_OT_MuestrasVTR" Width="1.5" PointX="13.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_PPL_Carga" Width="1.5" PointX="13.5" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_PPL_clean" Width="1.5" PointX="11.75" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_PPL_exclude" Width="1.5" PointX="7.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_PPL_paso" Width="1.5" PointX="9.75" PointY="27.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_PPL_repeat" Width="1.5" PointX="15.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_PPL_valida" Width="1.5" PointX="7.5" PointY="30.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_PPL_valida_archivos" Width="1.5" PointX="5.25" PointY="27.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Procesos" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Procesos_audit" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_Procesos_tipo" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_SWDEM" Width="1.5" PointX="3" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_TipoServicio" Width="1.5" PointX="0.75" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_VTR_clean" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_VTR_exclude" Width="1.5" PointX="7.5" PointY="37.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_VTR_paso" Width="1.5" PointX="9.75" PointY="40.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_VTR_repeat" Width="1.5" PointX="16.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_VTR_valida" Width="1.5" PointX="7.5" PointY="47" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_VTR_valida_archivos" Width="1.5" PointX="5.25" PointY="44.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.Boleta_VTR_VTR_PPL_clean" Width="1.5" PointX="14" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.FiltrosQueryBuilder" Width="1.5" PointX="17.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Boleta_VTR_DSAModel.PowerBi_Disparos" Width="1.5" PointX="5.75" PointY="19.75" IsExpanded="true" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Agenda_Job_Boleta_VTR_Procesos" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Agenda_Job_Boleta_VTR_SWDEM" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Alta_OT_Boleta_VTR_OT" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Procesos_audit_Boleta_VTR_Auditoria_tipos" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Procesos_Boleta_VTR_Ciclo" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_OT_Boleta_VTR_OT_estado" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_OT_Boleta_VTR_Procesos" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_PPL_Carga_Boleta_VTR_OT" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_PPL_Carga_Boleta_VTR_Procesos" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_VTR_PPL_clean_Boleta_VTR_PPL_clean" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Exclude_Boleta_VTR_Valida_archivos" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_PPL_paso_Boleta_VTR_Valida1" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Valida_Boleta_VTR_Valida_archivos" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Valida_archivos_Boleta_VTR_SWDEM" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Procesos_audit_Boleta_VTR_Procesos" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Procesos_Boleta_VTR_Procesos_tipo" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_Procesos_Boleta_VTR_TipoServicio" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_VTR_valida_archivos_Boleta_VTR_SWDEM" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_VTR_PPL_clean_Boleta_VTR_VTR_clean" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_VTR_exclude_Boleta_VTR_VTR_valida_archivos" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_VTR_paso_Boleta_VTR_VTR_valida1" ManuallyRouted="false" />
+        <AssociationConnector Association="Boleta_VTR_DSAModel.FK_Boleta_VTR_VTR_valida_Boleta_VTR_VTR_valida_archivos" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

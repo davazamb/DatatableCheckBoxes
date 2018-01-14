@@ -1,31 +1,491 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+@using DatatablesCheckBox.WEB.Models
+@model cModelos
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h3>Buscar</h3>
+    @Html.DropDownListFor(x => Model.procesos.codigo_proceso, (IEnumerable<SelectListItem>)ViewBag.ListadoProcesoDisponibleVtr, new { id = "dropNmroProceso", @class = "form-control input-sm" })
+
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <!--Inicio Table-->
+            <div class="table-responsive">
+                @*<div style="overflow-x:auto; overflow-y:scroll; outline: none; height:150px;"></div>*@                        @*<input type="checkbox" id="A" />  Seleccionar todos?<br />*@
+
+                <table class="table table-condensed table-striped" id="TablaProgramar">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th nowrap>Codigo</th>
+                            <th nowrap>Mes</th>
+                            <th nowrap>OT</th>
+                            <th nowrap>Estado</th>
+                            <th nowrap>Cod.Estado</th>
+                            <th nowrap>Proceso</th>
+                            <th nowrap>Servicio</th>
+                            <th nowrap>Ciclo</th>
+                            <th nowrap>Cantidad</th>
+                            @*<th nowrap>Acci&oacute;n</th>*@
+                        </tr>
+                    </thead>
+
+                </table>
+
+
+            </div>
+            <!--Termino Table-->
+        </div>
+
     </div>
 </div>
+
+
+
+
+
+
+<style type="text/css">
+    tr.even {
+        background-color: #F5F5F5 !important;
+    }
+
+
+    .green {
+        background-color: lightgreen !important;
+    }
+
+    .blue {
+        background-color: lightcyan !important;
+    }
+
+    .red {
+        background-color: lightpink !important;
+    }
+
+    div.container {
+        min-width: 980px;
+        margin: 0 auto;
+    }
+</style>
+
+@section scripts{
+    <script src="~/Scripts/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.js"></script>
+    <script src="~/Scripts/bootstrap-clockpicker.min.js"></script>
+    <script src="~/Scripts/App/programarDisparo.js"></script>
+
+
+    <script src="~/Scripts/DataTables/dataTables.checkboxes.min.js"></script>
+    @*<script src="~/Scripts/DataTables/datatables.min.js"></script>*@
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.clockpicker').clockpicker();
+        });
+
+         var TabladeProgramar;
+            $('document').ready(function () {
+                $(".fecha").datepicker({
+                    startDate: "now",
+                    format: "dd/mm/yyyy",
+                    language: "es",
+                    autoclose: true,
+                    todayHighlight: true,
+                    orientation: "left bottom",
+                }).on("changeDate", function (ev) {
+                    $(this).valid();
+                    //
+                });
+
+                $("#fechaProgramar").datepicker(
+                    "setDate", "now");
+
+            });
+
+            $('document').ready(function () {
+                $("#frmLotes").submit(function () {
+                    $.blockUI({ message: 'Cargando.....' });
+                    //$('.blockOverlay').attr('title', 'Click to unblock').click($.unblockUI);
+                });
+            });
+
+
+            $('document').ready(function () {
+                MuestraEspera($("#TablaProgramar"), "Cargando datos, por favor espere...");
+                url = '@Url.Action("BuscarProcesoDisparo", "Distribucion")';
+                TabladeProgramar = $("#TablaProgramar").DataTable({
+                //    dom: 'Bfrtip',
+                //buttons: [
+                //    'selectAll',
+                //    'selectNone'
+                //],
+                bFilter: false,
+                lengthChange: false,
+                serverSide: false,
+                lengthChange: false,
+                type: "Get",
+                dataType: "json",
+                select: true,
+                //select: {
+                //    style: "none",
+                //    selector: 'td:not(.col-accion)'
+                //},
+                "language": {
+                    "url": "@Url.Content("~/Scripts/DataTables/spanish.json")"
+                },
+
+                columns: [
+
+                    {
+                        data: "Codigo_OT",
+                        'targets': 0,
+                        //render: function (data, type, row) {
+                        //    if (row.Codigo_Estado <= 4) {
+                        //       return '<input type="checkbox" id="checkInactivo" class="inactivo" disabled>';
+                        //    } else if (row.Codigo_Estado <= 6) {
+                        //        return '<input type="checkbox" id="checkActivo" class="activo">';
+                        //    }
+                        //    return '<input type="checkbox" id="checkInactivo" class="inactivo" disabled>';
+                        //},
+                        //className: 'select-checkbox',
+                        className: 'select-checkbox',
+                        //checkboxes: {
+                        //    selectRow: true
+                        //    //selectAll: true,
+                        //    //selectAllPages: true
+                        //},
+                        createdCell: function (td, cellData, rowData, row, col) {
+                            if (rowData[3] === 156156) {
+                                this.api().cell(td).checkboxes.disable();
+                            }
+                        },
+                    },
+
+                { data: "Codigo_Proceso", "autoWidth": true },
+                {
+                    data: "Mes_Operacion",
+
+                    "render": function (jsonDate) {
+                        if (jsonDate != null) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = (date.getMonth() < 10 ? '0' : '') + 1;
+                            var fecha = date.getDate() + "/" + month + "/" + date.getFullYear();
+                            return '<span class="label label-success">' + fecha + '</span>'
+                        }
+                    }, "autoWidth": true,
+                },
+                { data: "Codigo_OT", "autoWidth": true },
+                { data: "Estado", "autoWidth": true },
+                { data: "Codigo_Estado", "autoWidth": true },
+                { data: "Tipo_Proceso", "autoWidth": true },
+                { data: "Tipo_Servicio", "autoWidth": true },
+                { data: "Ciclo", "autoWidth": true },
+                { data: "Cantidad", "autoWidth": true }
+
+                ],
+            'select': {
+                style: 'multi'
+                //selector: 'td:first-child'
+            },
+            "order": [[2, "desc"]],
+
+            //"createdRow": function (row, data, dataIndex) {
+            //    if (data.Codigo_Estado == "5") {
+            //        $(row).addClass('green');
+            //    } else if (data.Codigo_Estado == "6") {
+            //        $(row).addClass('blue');
+            //    } else if (data.Codigo_Estado == "2") {
+            //        $(row).addClass('red');
+            //    }
+            //},
+
+
+
+
+            //"rowCallback": function (row, data, dataIndex) {
+            //    if (data.Codigo_OT.active == "156156") {
+            //        $(row).removeClass('select-checkbox');
+
+            //    }
+            //},
+
+            //"tableTools": {
+            //    "fnRowDeselected": function (nodes) {
+            //        alert('The row with ID ' + nodes[0].id + ' was deselected');
+            //    }
+            //},
+
+            //"stripeClasses": [],
+
+        ajax: {
+            url: url,
+            data: function (d) {
+
+                var nmroProceso = $("#dropNmroProceso").val();
+                d.idProceso = nmroProceso;
+            },
+
+            complete: function (settings, textStatus) {
+                OcultaEspera($("#TablaProgramar"));
+            },
+            //error: function () {
+            //    alert('Session finalizada, inicie session nuevamente.');
+            //    location.reload();
+            //}
+                }
+            });
+
+
+            });
+
+
+            $("#dropNmroProceso").change(function () {
+                LlenaTablaProgramar();
+            });
+
+
+            function LlenaTablaProgramar() {
+                MuestraEspera($("#TablaProgramar"), "Cargando datos, por favor espere...");
+                TabladeProgramar.ajax.reload();
+            }
+
+        //$('#A').click(function () {
+        //    // alert($(this).prop('checked'));
+        //    if ($(this).is(':checked') == true) {
+        //        $('.activo').prop('checked', true);
+        //    } else {
+        //        $('.activo').prop('checked', false);
+        //    }
+        //});
+
+            $('button').on('click', function () {
+                //var checkeds = TabladeProgramar.columns().checkboxes.selected()[0];
+                var archivosData = TabladeProgramar.rows(['.selected']).data().toArray();
+                //var tmpData;
+                //$.each(tblData, function (i, val) {
+                //    tmpData = tblData[i].val;
+
+                //});
+
+                //for (var i = 0, l = checkeds.length; i < l; i++) {
+                //    if (checkeds[i].checked) {
+                //       var checks = checkeds[i].value;
+                //    }
+                //}
+                //var archivosData = TabladeProgramar.rows().data().toArray();
+                var data = {
+                    //"Codigo_OT": checkeds,
+                    "listados": archivosData
+                };
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("ListadoDisparo", "Distribucion")',
+                    dataType: 'json',
+                    data: data
+                }).done(function (response) {
+                    if (response.resultado && response.resultado.Codigo <= 0) {
+                        notificarResultado(response.resultado);
+                        return;
+                    }
+                });
+
+
+
+                @*$.ajax({
+                    url: '@Url.Action("ListadoDisparo", "Distribucion")',
+                    type: 'Post',
+                    contentType: false,
+                    beforeSend: function () { },
+                    success: function (result) {
+
+                    },
+                    error: function () { },
+                    data: data,
+                    cache: false,
+                    processData: false
+                }).done(function (response) {
+                    //notificarResultado(response.resultado);
+                    TabladeProgramar.ajax.reload();
+                    OcultaEspera($("#TablaProgramar"));
+                });*@
+            });
+
+
+
+
+            @*function confirmaEliminacion(codigo_reg_OT, codigo_proceso) {
+                bootbox.dialog(
+                    {
+                        message: "Se eliminará el Registro. ¿Desea continuar?",
+                        title: "Eliminar Registro de lote ",
+                        buttons: {
+                            danger: {
+                                label: "Sí",
+                                className: "btn-success",
+                                callback: function () {
+                                    eliminar(codigo_reg_OT, codigo_proceso);
+                                }
+                            },
+                            main: {
+                                label: "No",
+                                className: "btn-primary",
+                                callback: function () {
+                                    //
+                                }
+                            }
+                        }
+                    });
+            }
+
+
+            function eliminar(codigo_reg_OT ,codigo_proceso ) {
+                MuestraEspera($("#TablaLotes"), "Cargando datos, por favor espere...");
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("EliminaOT", "Repositorio")' + '?codigoRegOT=' + codigo_reg_OT /*+ '&codigoProceso=' + codigo_proceso */
+
+                    }).done(function (data) {
+                        //notificarResultado(data.respuesta);
+                        TabladeLotes.ajax.reload();
+                    });
+              }*@
+
+
+            @*function Inhabilitar(codigo_reg_OT) {
+                $('#codigo_reg_OT').val(codigo_reg_OT);
+                $('#descripcion').val('');
+                document.getElementById("inhabilita").checked = false;
+
+                $('.modalAlertInhabilitacion').modal({
+                    show: 'true'
+                });
+            }
+            function habilitar(codigo_reg_OT) {
+                $('#codigo_reg_OTha').val(codigo_reg_OT);
+                $('#descripcionHabilita').val('');
+                document.getElementById("habilita").checked = false;
+
+                $('.modalAlerthabilitacion').modal({
+                    show: 'true'
+                });
+            }
+
+            function habilitarRegistro() {
+                MuestraEspera($("#TablaLotes"), "Procesando motivo, por favor espere...");
+                var HaChk = document.getElementsByName('ha_Checkbox');
+                var idHcodigo_reg_OT = $("#codigo_reg_OTha").val();
+                var desMotivoH = $("#descripcionHabilita").val();
+
+                //Llenando el formData
+                var formData = new FormData();
+
+                //Check
+                for (var i = 0, l = HaChk.length; i < l; i++) {
+                    if (HaChk[i].checked) {
+                        formData.append('cEstado', HaChk[i].value);
+                    }
+                }
+
+                formData.append('cCodigo_Reg_OT', idHcodigo_reg_OT);
+                formData.append('cDescripcion', desMotivoH);
+
+                $.ajax({
+                    url: '@Url.Action("IngresoMotivo", "Repositorio")',
+                    type: 'Post',
+                    contentType: false,
+                    beforeSend: function () { },
+                    success: function (result) {
+
+                    },
+                    error: function () { },
+                    data: formData,
+                    cache: false,
+                    processData: false
+                }).done(function (response) {
+                    //notificarResultado(response.resultado);
+                    TabladeLotes.ajax.reload();
+                    OcultaEspera($("#TablaLotes"));
+                });
+
+            }*@
+
+
+            @*function InhabilitarRegistro() {
+                MuestraEspera($("#TablaLotes"), "Procesando motivo, por favor espere...");
+                var inHaChk = document.getElementsByName('inha_Checkbox');
+                var idcodigo_reg_OT = $("#codigo_reg_OT").val();
+                var desMotivo = $("#descripcion").val();
+
+                //Llenando el formData
+                var formData = new FormData();
+
+                //Check
+                for (var i = 0, l = inHaChk.length; i < l; i++) {
+                    if (inHaChk[i].checked) {
+                        formData.append('cEstado', inHaChk[i].value);
+                    }
+                }
+
+                formData.append('cCodigo_Reg_OT', idcodigo_reg_OT);
+                formData.append('cDescripcion', desMotivo);
+
+                $.ajax({
+                    url: '@Url.Action("IngresoMotivo", "Repositorio")',
+                    type: 'Post',
+                    contentType: false,
+                    beforeSend: function () { },
+                    success: function (result) {
+
+                    },
+                    error: function () { },
+                    data: formData,
+                    cache: false,
+                    processData: false
+                }).done(function (response) {
+                    //notificarResultado(response.resultado);
+                    TabladeLotes.ajax.reload();
+                    OcultaEspera($("#TablaLotes"));
+                });
+
+            }*@
+
+
+            //var buttonIn = $('#submitIn');
+            //$('#inhabilita').change(function (event) {
+            //    buttonIn.prop('disabled', !$(event.target).is(':checked'));
+            //});
+
+            //var button = $('#submitHab');
+            //$('#habilita').change(function (event) {
+            //    button.prop('disabled', !$(event.target).is(':checked'));
+            //});
+
+            //function CancelarLote() {
+            //    $('#drpCiclo').val('');
+            //    $('#drpTipoServicio').val('');
+            //    $('#drpTipoProceso').val('');
+            //    $("#fechaMes").datepicker(
+            //        "setDate", "now");
+            //    $('#SubirLote').val('');
+            //}
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+}
